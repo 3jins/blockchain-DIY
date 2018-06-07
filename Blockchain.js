@@ -20,5 +20,15 @@ export default class Blockchain {
         newBlock.hash = newBlock.calculateHash();
         this.chain.push(newBlock);
     }
+
+    isChainValid() {
+        let currentIdx = this.chain.length;
+        while(currentIdx > 1) {
+            let currentBlock = this.chain[--currentIdx];
+            if(currentBlock.hash !== currentBlock.calculateHash()) return false;
+            if(currentBlock.previousHash !== this.chain[currentIdx - 1].hash) return false;
+        }
+        return true;
+    }
 }
 
